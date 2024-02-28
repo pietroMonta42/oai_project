@@ -1,0 +1,21 @@
+credentials:
+  usernames:
+    jsmith:
+      email: jsmith@gmail.com
+      logged_in: False # Will be managed automatically
+      name: John Smith
+      password: admin # Will be hashed automatically
+      oai_key: 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
+    monta8:
+      email: pietrimonta8@gmail.com
+      logged_in: False # Will be managed automatically
+      name: Pietro Monta
+      password: project8 # Will be hashed automatically
+      oai_key: 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
+cookie:
+  expiry_days: 30
+  key: e63ed35858b2df5c306f0a79b85d380d950472ce23e54fd75b61988f44add3e7
+  name: session_key
+preauthorized:
+  emails:
+  - admin@gmail.com
