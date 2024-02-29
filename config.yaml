@@ -5,13 +5,13 @@ credentials:
       logged_in: False # Will be managed automatically
       name: John Smith
       password: oai_admin? # Will be hashed automatically
-      oai_key: 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
+      oai_key: true
     monta8:
       email: pietrimonta8@gmail.com
       logged_in: False # Will be managed automatically
       name: Pietro Monta
       password: project8 # Will be hashed automatically
-      oai_key: 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
+      oai_key: true
 cookie:
   expiry_days: 30
   key: e63ed35858b2df5c306f0a79b85d380d950472ce23e54fd75b61988f44add3e7

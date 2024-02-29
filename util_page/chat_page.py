@@ -8,8 +8,12 @@ logger = logging.getLogger('web_app:Chat')
 
 def create_page(authenticator):
     
-    
-    op = Operations(st.session_state["oai_key"])
+    if st.session_state['oai_key']:
+        op = Operations(st.secrets["OPENAI_API_KEY"])
+    else:
+        if key := st.text_input("OpenAI API Key"):
+            st.session_state['oai_key'] = key
+        st.stop()
 
     tool_options = ["code Interpreter", "function", "retrieval"]
 
