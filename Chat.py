@@ -29,7 +29,7 @@ authenticator = stauth.Authenticate(
 
 if 'register' in st.session_state and st.session_state["register"]:
     try:
-        email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(preauthorization=False)
+        email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(preauthorization=False, location='sidebar')
         if email_of_registered_user:
             logger.info(f"User registered: {username_of_registered_user}+ {email_of_registered_user} + {name_of_registered_user}")
             st.success('User registered successfully')
