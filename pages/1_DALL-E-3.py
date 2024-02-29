@@ -37,7 +37,7 @@ st.caption("Generative Image Model")
 if "generating" not in st.session_state:
     st.session_state["generating"] = False
 
-if prompt := st.text_input("Prompt for image generation", disabled=st.session_state['generating']) and not st.session_state['generating']:
+if (prompt := st.text_input("Prompt for image generation", disabled=st.session_state['generating'])) and not st.session_state['generating']:
     logger.info(f"prompt: {prompt}")
     st.session_state["generating"] = True
     with st.spinner("Generating image..."):
@@ -54,8 +54,10 @@ if prompt := st.text_input("Prompt for image generation", disabled=st.session_st
                 image_file.write(requests.get(image[0]).content)
                 logger.info(f"image_file saved at: {save_path}")
         else:
-            st.download_button("Save Image", requests.get(image[0]).content, f"{image_name}.jpg", "Save image to your computer")
-        prompt = None
+            if st.download_button("Save Image", requests.get(image[0]).content, f"{image_name}.jpg", "Save image to your computer"):
+                logger.info(f"image_file saved at: {image_name}")
+    st.session_state["generating"] = False
+            
         
     if st.button("Generate another image"):
         st.session_state["generating"] = False
