@@ -7,6 +7,9 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('web_app:DALL-E-3')
 
+if "authentication_status" not in st.session_state:
+    st.session_state["authentication_status"] = False
+
 if not st.session_state["authentication_status"]:
     st.error('Please login to use this feature')
     st.stop()
@@ -31,8 +34,12 @@ with st.sidebar:
 st.title("DALL-E 3")
 st.caption("Generative Image Model")
 
-if prompt := st.text_input("Prompt for image generation"):
+if "generating" not in st.session_state:
+    st.session_state["generating"] = False
+
+if prompt := st.text_input("Prompt for image generation", disabled=st.session_state['generating']) and not st.session_state['generating']:
     logger.info(f"prompt: {prompt}")
+    st.session_state["generating"] = True
     with st.spinner("Generating image..."):
         image=op.create_image(prompt)
         st.image(image[0], use_column_width=True)
@@ -47,5 +54,9 @@ if prompt := st.text_input("Prompt for image generation"):
                 image_file.write(requests.get(image[0]).content)
                 logger.info(f"image_file saved at: {save_path}")
         else:
-            st.download_button("Save Image", image[0], f"{image_name}.jpg", "Save image to your computer")
+            st.download_button("Save Image", requests.get(image[0]).content, f"{image_name}.jpg", "Save image to your computer")
         prompt = None
+        
+    if st.button("Generate another image"):
+        st.session_state["generating"] = False
+        st.rerun()
