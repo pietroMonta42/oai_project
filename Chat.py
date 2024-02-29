@@ -27,6 +27,8 @@ authenticator = stauth.Authenticate(
     config['preauthorized']
 )
 
+st.sidebar.title("Account")
+
 if 'register' in st.session_state and st.session_state["register"]:
     try:
         email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(preauthorization=False, location='sidebar')
@@ -44,7 +46,7 @@ if 'register' in st.session_state and st.session_state["register"]:
     if st.button('Annulla'):
         st.session_state["register"] = False
         st.rerun()
-else:
+elif not st.session_state["authentication_status"]:
     if 'registering_success' in st.session_state and st.session_state["registering_success"]:
         st.success('User registered successfully')
         st.session_state["registering_success"] = False
