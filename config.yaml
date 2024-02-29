@@ -1,21 +1,27 @@
-credentials:
-  usernames:
-    jsmith:
-      email: jsmith@gmail.com
-      logged_in: False # Will be managed automatically
-      name: John Smith
-      password: oai_admin? # Will be hashed automatically
-      oai_key: true
-    monta8:
-      email: pietrimonta8@gmail.com
-      logged_in: False # Will be managed automatically
-      name: Pietro Monta
-      password: project8 # Will be hashed automatically
-      oai_key: true
 cookie:
   expiry_days: 30
   key: e63ed35858b2df5c306f0a79b85d380d950472ce23e54fd75b61988f44add3e7
   name: session_key
+credentials:
+  usernames:
+    jsmith:
+      email: jsmith@gmail.com
+      logged_in: false
+      name: John Smith
+      oai_key: true
+      password: $2b$12$1b.D21OiuPTXoGnq/16kMOnO6sIVB8SePzqRAihYz.kqhoHHUQulK
+    monta8:
+      email: pietrimonta8@gmail.com
+      logged_in: false
+      name: Pietro Monta
+      oai_key: true
+      password: $2b$12$1q6NJdpT166heyFPeP7AQehhyCKNZgOyyoXzyz6ha7779bE68TclS
+    montaa8:
+      email: monta8@io.oi
+      logged_in: false
+      name: Monta
+      password: $2b$12$OROS2woOHyucKQ8seMviPeQpxfxjn5JINhwrJDfw.CdRaGKfqlX8O
+      oai_key: true
 preauthorized:
   emails:
   - admin@gmail.com

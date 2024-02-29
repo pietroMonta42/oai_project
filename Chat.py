@@ -27,17 +27,32 @@ authenticator = stauth.Authenticate(
     config['preauthorized']
 )
 
-
-authenticator.login(max_concurrent_users= 3)
-if st.session_state["authentication_status"] is None and (st.button('Register') or (st.session_state.get("register") and st.session_state["register"])):
+if 'register' in st.session_state and st.session_state["register"]:
     try:
         email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(preauthorization=False)
         if email_of_registered_user:
+            logger.info(f"User registered: {username_of_registered_user}+ {email_of_registered_user} + {name_of_registered_user}")
             st.success('User registered successfully')
+            with open('./config.yaml', 'w') as file:
+                yaml.dump(config, file, default_flow_style=False)
+                logger.info(f"config: {config}")
+            st.session_state["register"] = False
+            st.session_state["registering_success"] = True
+            st.rerun()
     except Exception as e:
-        st.error('Unable to register user')
+        st.error(e)
+    if st.button('Annulla'):
         st.session_state["register"] = False
-    st.stop()
+        st.rerun()
+else:
+    if 'registering_success' in st.session_state and st.session_state["registering_success"]:
+        st.success('User registered successfully')
+        st.session_state["registering_success"] = False
+    authenticator.login(max_concurrent_users= 3)
+    if st.button('Register new User'):
+        logger.info(f"User registering:")
+        st.session_state["register"] = True
+        st.rerun()
 if st.session_state["authentication_status"]:
     if not config['credentials']['usernames'].get(st.session_state["username"]) :
         st.error('Username/password is incorrect')
