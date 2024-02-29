@@ -41,8 +41,11 @@ if prompt := st.text_input("Prompt for image generation"):
         st.session_state["last_image"] = image[0]
         image_name = image[0][117:149]
         logger.info(f"image_name: {image_name}")
-        save_path = os.path.join("images", image_name)
-        with open(save_path, 'wb') as image_file:
-            image_file.write(requests.get(image[0]).content)
-            logger.info(f"image_file saved at: {save_path}")
+        if False:
+            save_path = os.path.join("images", image_name)
+            with open(save_path, 'wb') as image_file:
+                image_file.write(requests.get(image[0]).content)
+                logger.info(f"image_file saved at: {save_path}")
+        else:
+            st.download_button("Save Image", image[0], f"{image_name}.jpg", "Save image to your computer")
         prompt = None
