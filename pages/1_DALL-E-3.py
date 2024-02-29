@@ -15,8 +15,12 @@ if "last_image" in st.session_state:
     st.write("Last image generated: " + st.session_state["last_image"])
     
 
-
-op = Operations(st.session_state["oai_key"])
+if st.session_state['oai_key']:
+    op = Operations(st.secrets["OPENAI_API_KEY"])
+else:
+    if key := st.text_input("OpenAI API Key"):
+        st.session_state['oai_key'] = key
+    st.stop()
 
 with st.sidebar:
     st.markdown("# Settings")
