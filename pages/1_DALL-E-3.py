@@ -54,7 +54,7 @@ if (prompt := st.text_input("Prompt for image generation", disabled=st.session_s
                 image_file.write(requests.get(image[0]).content)
                 logger.info(f"image_file saved at: {save_path}")
         else:
-            if st.download_button("Save Image", requests.get(image[0]).content, f"{image_name}.jpg", "Save image to your computer"):
+            if st.download_button("Save Image", requests.get(image[0]).content, f"{image_name}", "Save image to your computer"):
                 logger.info(f"image_file saved at: {image_name}")
     st.session_state["generating"] = False
             
