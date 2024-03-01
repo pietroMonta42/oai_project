@@ -22,18 +22,19 @@ def create_page(authenticator):
     tool_options = ["code Interpreter", "function", "retrieval"]
 
     def reload_history():
+        
+        logger.info(f"reload_history:")
         history = op.get_history_conversation(st.session_state['thread_id'])    
-
+        logger.info(f"history reloaded, generating messages...")
         # Initialize chat history
-        if "messages" not in st.session_state or ('reload' in st.session_state and st.session_state['reload']) :
-            st.session_state.messages = []
-            # Add message to chat history
-            #st.session_state.messages.append({"role": "assistant", "content": "Hello 👋"})
-            #load messages from thread
-            for message in history:
-                st.session_state.messages.append(message)
-            if 'reload' in st.session_state:
-                st.session_state['reload'] = False
+        st.session_state.messages = []
+        # Add message to chat history
+        #st.session_state.messages.append({"role": "assistant", "content": "Hello 👋"})
+        #load messages from thread
+        for message in history:
+            st.session_state.messages.append(message)
+        if 'reload' in st.session_state:
+            st.session_state['reload'] = False
 
     assistants_dict_meta = op.get_all_assistants()
     logger.info(f"assistants_dict_meta: loaded")
