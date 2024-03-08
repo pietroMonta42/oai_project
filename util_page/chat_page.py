@@ -151,7 +151,7 @@ def create_page(authenticator):
             
             file_ids = []
             if files:
-                with st.spinner("Uploading images..."):
+                with st.spinner("Uploading files..."):
                     for file in files:
                         id=op.upload_file(file)
                         file_ids.append(id)
@@ -162,7 +162,6 @@ def create_page(authenticator):
                 st.markdown(prompt)
             # Add user message to chat history
             st.session_state.messages.append({"role": "user", "content": prompt})
-            # Print assistant getting response
             
             with st.spinner("Genereting response..."):
                 

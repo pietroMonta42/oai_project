@@ -16,61 +16,70 @@ class LocalDB:
         return cursor.fetchall()
     
     def new_assistant(self, id, name, model, image):
-        query = f"INSERT INTO assistants (id, name, model, image) VALUES ('{id}', '{name}', '{model}', '{image}')"
+        query = "INSERT INTO assistants (id, name, model, image) VALUES ( ?, ?, ?, ?);"
         cursor = self.conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query, (id, name, model, image))
         self.conn.commit()
         return cursor.rowcount
     
     def get_assistant(self, id):
-        query = f"SELECT * FROM assistants WHERE id = '{id}'"
+        query = f"SELECT * FROM assistants WHERE id = ? ;"
         cursor = self.conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query, (id,))
         return cursor.fetchone()
     
     def put_assistant(self, id, name=None, model=None, image=None):
-        query = f"UPDATE assistants SET "
+        query = "UPDATE assistants SET "
+        param = []
         if name:
-            query = query + f"name = '{name}', "
+            query = query + "name = ?, "
+            param.append(name)
         if model:
-            query = query + f", model = '{model}', "
+            query = query + f", model = ?, "
+            param.append(model)
         if image:
-            query = query + f", image = '{image}', "
+            query = query + f", image = ?, "
+            param.append(image)
         query = query[:-2]
-        query = query + f" WHERE id = '{id}'"
+        query = query + " WHERE id = ? ;"
+        param = tuple(param)
         cursor = self.conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query, param)
     
     def get_threads(self, max = 50):
-        query = f"SELECT * FROM threads LIMIT {max}"
+        query = f"SELECT * FROM threads LIMIT {max};"
         self.conn.row_factory = self.dict_factory
         cursor = self.conn.cursor()
         cursor.execute(query)
         return cursor.fetchall()
         
     def new_thread(self, id, assistant_id, title):
-        query = f"INSERT INTO threads (id, assistant_id, title) VALUES ({id}, {assistant_id}, {title})"
+        query = "INSERT INTO threads (id, assistant_id, title) VALUES (?, ?, ?);"
+        print("log :", query)
         cursor = self.conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query, (id, assistant_id, title))
         self.conn.commit()
         return cursor.rowcount
     
     def get_thread(self, id):
-        print("log :" + id)
-        query = f"SELECT * FROM threads WHERE id = '{id}'"
+        query = f"SELECT * FROM threads WHERE id = ? ;"
         cursor = self.conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query, (id,))
         result = cursor.fetchone()
-        print("log :", result)
         return result
     
     def put_thread(self, id, assistant_id, title=None):
-        query = f"UPDATE threads SET assistant_id = '{assistant_id}'"
+        query = f"UPDATE SET assistant_id = ? "
+        param = []
+        param.append(assistant_id)
         if title:
-            query = query + f", title = '{title}' "
-        query = query + f" WHERE id = '{id}'"
+            query = query + f", title = ? "
+            param.append(title)
+        query = query + f" WHERE id = ? ;"
+        param.append(id)
+        param = tuple(param)
         cursor = self.conn.cursor()
-        cursor.execute(query)
+        cursor.execute(query, param)
         
     def dict_factory(self,cursor, row):
         d = {}

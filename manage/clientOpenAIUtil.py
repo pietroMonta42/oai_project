@@ -63,7 +63,7 @@ class OpenAI_Client:
                 assistant_id=assistant_id,
                 thread={
                     "messages": [
-                    {"role": "user", "content": message, "file_ids": list(files)}
+                    {"role": "user", "content": message, "file_ids": files}
                     ]
                 },
                 model = model,
