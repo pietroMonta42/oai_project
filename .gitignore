@@ -1,7 +1,5 @@
 /.DS_Store
 /.venv
-/__pycache__
-/util_page/__pycache__
+__pycache__/
 secrets.toml
-manage/__pycache__
-manage/__pycache__/
+__pycache__/
