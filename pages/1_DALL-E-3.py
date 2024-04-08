@@ -38,7 +38,7 @@ if "generating" not in st.session_state:
     st.session_state["generating"] = False
 
 if ( not st.session_state['generating'] ):
-    if prompt := st.text_input("Prompt for image generation"):
+    if prompt := st.text_input("Prompt for image generation") and st.button("Generate"):
         st.session_state["generating"] = True
         logger.info(f"prompt: {prompt}")
         st.session_state["prompt"] = prompt
