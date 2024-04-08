@@ -38,7 +38,7 @@ if "generating" not in st.session_state:
     st.session_state["generating"] = False
 
 if ( not st.session_state['generating'] ):
-    if prompt := st.text_input("Prompt for image generation") and st.button("Generate"):
+    if prompt := st.chat_input("Prompt"):
         st.session_state["generating"] = True
         logger.info(f"prompt: {prompt}")
         st.session_state["prompt"] = prompt
@@ -52,6 +52,7 @@ if st.session_state["generating"]:
             
 if "image" in st.session_state and st.session_state["image"] is not None:
     image = st.session_state["image"]
+    st.text(f"Image prompt: {st.session_state['prompt']}")
     st.image(image[0], use_column_width=True)
     logger.info(f"image: {image[0]}")
     st.write("Image generated at:" + image[0])
